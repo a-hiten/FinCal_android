@@ -15,12 +15,12 @@
         <activity
             android:name=".CreateUserActivity"
             android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".LoginActivity"-->
+<!--            android:exported="false"-->
+<!--            android:theme="@style/Theme.Medmemo" />-->
         <activity
             android:name=".LoginActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Medmemo" />
-        <activity
-            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
