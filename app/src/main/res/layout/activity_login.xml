@@ -74,13 +74,26 @@
         android:layout_width="208dp"
         android:layout_height="64dp"
         android:layout_marginStart="101dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="147dp"
         android:layout_marginEnd="102dp"
         android:backgroundTint="#6D89FF"
         android:text="サインイン"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="205dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="102dp"
+        android:layout_marginBottom="147dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>

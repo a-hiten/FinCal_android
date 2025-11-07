@@ -1,6 +1,7 @@
 package com.example.medmemo
 
 import android.os.Bundle
+import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,5 +17,11 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val spinner = findViewById<Spinner>(R.id.spinner)
+
+        // 権限の選択肢をここで書いてる
+        val items = listOf("user","admin")
+
+
     }
 }
