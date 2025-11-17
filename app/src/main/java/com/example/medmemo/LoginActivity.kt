@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val spinner = findViewById<Spinner>(R.id.spinner)
+        val spinner = findViewById<Spinner>(R.id.roleEdit)
 
         // 権限の選択肢をここで書いてる
         val items = listOf("user","admin")
