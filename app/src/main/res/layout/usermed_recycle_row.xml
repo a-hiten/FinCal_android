@@ -9,26 +9,31 @@
         android:id="@+id/view2"
         android:layout_width="98dp"
         android:layout_height="108dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="4dp"
         android:background="#83A8C7"
-        tools:layout_editor_absoluteX="13dp"
-        tools:layout_editor_absoluteY="4dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
         android:layout_width="283dp"
         android:layout_height="108dp"
+        android:layout_marginTop="4dp"
         android:background="#E0E0E0"
-        tools:layout_editor_absoluteX="111dp"
-        tools:layout_editor_absoluteY="4dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/medImg"
         android:layout_width="70dp"
         android:layout_height="59dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:background="#E0E0E0"
         app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="@+id/view2"
         app:layout_constraintTop_toTopOf="@+id/view2"
         tools:srcCompat="@drawable/noimage" />
@@ -37,68 +42,81 @@
         android:id="@+id/expDateText"
         android:layout_width="41dp"
         android:layout_height="16dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:text="使用期限"
         android:textSize="10sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/medImg"
-        tools:layout_editor_absoluteX="41dp" />
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/medImg" />
 
     <TextView
         android:id="@+id/dateConText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="4dp"
         android:text="date"
-        app:layout_constraintTop_toBottomOf="@+id/expDateText"
-        tools:layout_editor_absoluteX="48dp" />
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/expDateText" />
 
     <TextView
         android:id="@+id/MedNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:text="MedName"
         android:textSize="24sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="9dp" />
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view" />
 
     <TextView
         android:id="@+id/effectText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:text="効能・効果："
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="62dp" />
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/MedNameText" />
 
     <TextView
         android:id="@+id/remainingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="4dp"
         android:text="残回数："
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="87dp" />
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/effectText" />
 
     <TextView
         android:id="@+id/remainingConText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:text="remaining"
-        tools:layout_editor_absoluteX="216dp"
-        tools:layout_editor_absoluteY="89dp" />
+        app:layout_constraintStart_toEndOf="@+id/remainingText"
+        app:layout_constraintTop_toBottomOf="@+id/effectConText" />
 
     <TextView
         android:id="@+id/effectConText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:text="effect"
-        tools:layout_editor_absoluteX="216dp"
-        tools:layout_editor_absoluteY="64dp" />
+        app:layout_constraintStart_toEndOf="@+id/effectText"
+        tools:layout_editor_absoluteY="62dp" />
 
     <Button
         android:id="@+id/usingButton"
         android:layout_width="80dp"
         android:layout_height="46dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="#61CA74"
         android:gravity="center"
         android:padding="0dp"
@@ -109,19 +127,29 @@
         android:textStyle="bold"
         app:cornerRadius="10dp"
         app:iconPadding="3dp"
-        tools:layout_editor_absoluteX="299dp"
-        tools:layout_editor_absoluteY="62dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.982" />
 
     <ImageButton
         android:id="@+id/deletingButton"
         android:layout_width="28dp"
         android:layout_height="35dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
         android:backgroundTint="#00FFFFFF"
         android:padding="0dp"
         android:scaleType="fitCenter"
         android:scrollbarSize="10dp"
-        tools:layout_editor_absoluteX="351dp"
-        tools:layout_editor_absoluteY="9dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/MedNameText"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@drawable/deleteimage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
