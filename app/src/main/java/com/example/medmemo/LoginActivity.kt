@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -42,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         val passwordEdit = findViewById<EditText>(R.id.passwordEdit)    // パスワード入力
         val roleEdit = findViewById<Spinner>(R.id.roleEdit)             //ユーザの権限
         val loginButton = findViewById<Button>(R.id.loginButton)        // ログインボタン
-        val createPageText = findViewById<Button>(R.id.createPageText)      // ユーザ作成画面へ遷移するテキスト
+        val createPageText = findViewById<TextView>(R.id.createPageText)      // ユーザ作成画面へ遷移するテキスト
 
         // １－２．loginButtonのクリックイベントリスナーを作成する
 
@@ -73,6 +74,11 @@ class LoginActivity : AppCompatActivity() {
                 put("userId", userId)
                 put("password", password)
             }
+            Log.d("API_REQUEST", "userId: $userId")
+            Log.d("API_REQUEST", "password: $password")
+            Log.d("API_REQUEST", "JSON Body: $requestBodyJson")
+
+
             // BodyのデータをAPIに送る為にRequestBody形式に加工
             val requestBody = requestBodyJson.toString().toRequestBody(mediaType)
             // Requestを作成
@@ -88,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
                 override fun onResponse(call: Call, response: Response) {
                     val body = response.body?.string()
                     println("レスポンスを受診しました: $body")
+                    Log.d("API_RESPONSE", "HTTP Code: ${response.code}")
 
 
                     if (response.isSuccessful && body != null) {
@@ -102,7 +109,10 @@ class LoginActivity : AppCompatActivity() {
                             // グローバル変数にセットしてる
                             Log.d("loginUserId", loginUserId)
                             MyApplication.getInstance().loginUserId = loginUserId
-                            Log.d("MyApplication.getInstance().loginUserId", MyApplication.getInstance().loginUserId)
+                            Log.d(
+                                "MyApplication.getInstance().loginUserId",
+                                MyApplication.getInstance().loginUserId
+                            )
 
                             runOnUiThread {
                                 //１－２－３－１－３．タイムライン画面に遷移する
@@ -135,8 +145,10 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 }
+
                 // １－２－２－２．リクエストが失敗した時(コールバック処理)
                 override fun onFailure(call: Call, e: IOException) {
+//                    Log.e("API_FAILURE", "Request failed: ${e.message}", e)
                     runOnUiThread {
                         // １－２－２－２－１．エラーメッセージをトースト表示する
                         Toast.makeText(
@@ -147,34 +159,14 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             })
-            // １－３．createButtonのクリックイベントリスナーを作成する
-            createPageText.setOnClickListener {
-                // Intentでどの画面に行きたいかを指定する
-                val createBt = Intent(this, CreateUserActivity::class.java)
-                // １－３－１．ユーザ作成画面に遷移する
-                startActivity(createBt)
-            }
-
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // １－３．createButtonのクリックイベントリスナーを作成する
+        createPageText.setOnClickListener {
+            // Intentでどの画面に行きたいかを指定する
+            val createBt = Intent(this, CreateUserActivity::class.java)
+            // １－３－１．ユーザ作成画面に遷移する
+            startActivity(createBt)
+        }
 
 
     }
