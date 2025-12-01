@@ -73,6 +73,23 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
         Log.d("aaa",holder.remainingCon.text.toString())
         Log.d("aaa",holder.dateCon.text.toString())
 
+        //画像表示処理
+        // 画像パスが登録されているかチェック
+        if (item.medImage.isNotEmpty()) {
+            // ファイルからBitmapを読み込む
+            val imgFile = java.io.File(item.medImage)
+            if (imgFile.exists()) {
+                val bitmap = android.graphics.BitmapFactory.decodeFile(imgFile.absolutePath)
+                holder.medImg.setImageBitmap(bitmap)
+            } else {
+                // ファイルが存在しない場合はデフォルト画像を表示
+                holder.medImg.setImageResource(R.drawable.noimage)
+            }
+        } else {
+            // パスが空ならデフォルト画像を表示
+            holder.medImg.setImageResource(R.drawable.noimage)
+        }
+
         /*
         // HTTP接続用インスタンス生成
         val client = OkHttpClient()
