@@ -103,7 +103,7 @@ class MedicineActivity : AppCompatActivity() {
                             medName = obj.optString("medName"),
                             expDate = obj.optString("expDate"),
                             effect = obj.optString("effect"),
-                            remaining = obj.optString("remaining"),
+                            remaining = obj.optInt("remaining").toString(),
                             medImage = "",
                         )
                         userMedList.add(data)

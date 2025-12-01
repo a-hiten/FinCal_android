@@ -77,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:text="効能・効果："
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/MedNameText" />
@@ -87,16 +87,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:text="残回数："
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/effectText" />
 
     <TextView
         android:id="@+id/remainingConText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_width="85dp"
+        android:layout_height="19dp"
         android:layout_marginTop="8dp"
         android:text="remaining"
         app:layout_constraintStart_toEndOf="@+id/remainingText"
@@ -104,18 +103,19 @@
 
     <TextView
         android:id="@+id/effectConText"
-        android:layout_width="39dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="12dp"
+        android:layout_width="106dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="48dp"
         android:text="effect"
+        android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/effectText"
-        tools:layout_editor_absoluteY="62dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/usingButton"
         android:layout_width="80dp"
         android:layout_height="46dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="#61CA74"
         android:gravity="center"
@@ -132,7 +132,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.982" />
+        app:layout_constraintVertical_bias="0.965" />
 
     <ImageButton
         android:id="@+id/deletingButton"

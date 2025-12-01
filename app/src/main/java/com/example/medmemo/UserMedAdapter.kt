@@ -64,12 +64,16 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
         // ビューホルダーのオブジェクトに対象行のデータ（薬名、効果、残数、使用期限）をセットする
         holder.medName.text = dataset[position].medName
         holder.effectCon.text = dataset[position].effect
-        holder.remainingCon.text = dataset[position].remaining
+        holder.remainingCon.text = dataset[position].remaining.toString()
         holder.dateCon.text = dataset[position].expDate.toString()
 
 
         Log.d("aaa",holder.medName.text.toString())
+        Log.d("aaa",holder.effectCon.text.toString())
+        Log.d("aaa",holder.remainingCon.text.toString())
+        Log.d("aaa",holder.dateCon.text.toString())
 
+        /*
         // HTTP接続用インスタンス生成
         val client = OkHttpClient()
         // JSON形式でパラメータを送るようデータ形式を設定
@@ -115,7 +119,9 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
                         return@runOnUiThread
                     }
                 }
+
             }
+
 
             // リクエストが失敗した時(コールバック処理)
             override fun onFailure(call: Call, e: IOException) {
@@ -127,6 +133,8 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
                 }
             }
         })
+
+        */
     }
 
 
