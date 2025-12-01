@@ -61,7 +61,7 @@ class MedicineActivity : AppCompatActivity() {
 
         // Requestを作成
         val request = Request.Builder()
-            .url(MyApplication.getInstance().apiUrl + "timelineInfo.php")
+            .url(MyApplication.getInstance().apiUrl + "userMedInfo.php")
             .post(requestBody)
             .build()
         // リクエスト送信（非同期処理）
@@ -86,28 +86,31 @@ class MedicineActivity : AppCompatActivity() {
                         }
                     }
 
-                    val whisperList = mutableListOf<WhisperRowData>()
-                    val whispers = json.optJSONArray("whisperList") ?: JSONArray()
+                    val userMedList = mutableListOf<UserMedRowData>()
+                    val usermeds = json.optJSONArray("userMedList") ?: JSONArray()
 
                     // ログ
-                    Log.d("Timeline", "loginUserId = $loginUserId")
-                    Log.d("Timeline", "whispers length = ${whispers.length()}")
+                    Log.d("UserMed", "loginUserId = $loginUserId")
+                    Log.d("UserMed", "whispers length = ${usermeds.length()}")
 
-//                    for (i in 0 until whispers.length()) {
-//                        val obj = whispers.getJSONObject(i)
-//                        val data = WhisperRowData(
-//                            userId = obj.optString("userId"),
-//                            userName = obj.optString("userName"),
-//                            whisperId = obj.optInt("whisperNo"),
-//                            whisperText = obj.optString("content"),
-//                            userImage = "",
-//                            goodImage = obj.optBoolean("goodFlg")
-//                        )
-//                        whisperList.add(data)
-//                    }
+                    for (i in 0 until usermeds.length()) {
+                        val obj = usermeds.getJSONObject(i)
+                        val data = UserMedRowData(
+                            userId = obj.optString("userId"),
+                            userName = obj.optString("userName"),
+                            userMedNo = obj.optInt("userMedNo"),
+                            medNo = obj.optInt("medNo"),
+                            medName = obj.optString("medName"),
+                            expDate = obj.optString("expDate"),
+                            effect = obj.optString("effect"),
+                            remaining = obj.optString("remaining"),
+                            medImage = "",
+                        )
+                        userMedList.add(data)
+                    }
                     val recyclerView = findViewById<RecyclerView>(R.id.userMedlineRecycle)
                     recyclerView.layoutManager = LinearLayoutManager(this@MedicineActivity)
-                    recyclerView.adapter = WhisperAdapter(whisperList, this@MedicineActivity)
+                    recyclerView.adapter = UserMedAdapter(userMedList, this@MedicineActivity)
                 }
             }
 

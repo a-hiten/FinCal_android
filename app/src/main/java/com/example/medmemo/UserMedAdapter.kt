@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -33,7 +34,7 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
         val remainingCon : TextView
         val dateCon : TextView
         val usingButton : Button
-        val deletingButton :Button
+        val deletingButton :ImageButton
         val medImg :ImageView
 
         init {
@@ -90,15 +91,23 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
             .build()
 
         client.newCall(request).enqueue(object : Callback {
-            // ３－４－４－１－１．正常にレスポンスを受け取った時(コールバック処理)
+            // 正常にレスポンスを受け取った時(コールバック処理)
             override fun onResponse(call: Call, response: Response) {
                 val bodyStr = response.body?.string().orEmpty()
                 (context as? android.app.Activity)?.runOnUiThread {
+                    //一次的に追記（落ちないようにしている）
+                    if (!bodyStr.trim().startsWith("{")) {
+                        Toast.makeText(context, "サーバーエラー（JSON形式ではありません）", Toast.LENGTH_SHORT).show()
+                        Log.d("server_error", bodyStr) // ←エラーメッセージ確認できる
+                        return@runOnUiThread
+                    }
+
+
                     val json = JSONObject(bodyStr)
                     val status = json.optString("status", json.optString("result", "error"))
 
 
-                    // ３－４－４－１－１－１．JSONデータがエラーの場合、受け取ったエラーメッセージをトースト表示して処理を終了させる
+                    // JSONデータがエラーの場合、受け取ったエラーメッセージをトースト表示して処理を終了させる
                     if (status != "success") {
                         val errMsg = json.optString("error", "失敗しました。")
                         Toast.makeText(context, errMsg, Toast.LENGTH_SHORT)
@@ -107,8 +116,10 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
                     }
                 }
             }
+
+            // リクエストが失敗した時(コールバック処理)
             override fun onFailure(call: Call, e: IOException) {
-                // ３－４－４－１－２－１．エラーメッセージをトースト表示する
+                // エラーメッセージをトースト表示する
                 (context as? android.app.Activity)?.runOnUiThread {
                     Toast.makeText(context, "リクエストが失敗しました", Toast.LENGTH_SHORT)
                         .show()
