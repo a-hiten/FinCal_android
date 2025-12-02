@@ -84,8 +84,8 @@ class LoginActivity : AppCompatActivity() {
             // Requestを作成
 
             val request = Request.Builder()
-                .url("http://10.0.2.2/FinMed_nemu-master/loginAuth.php")
-//                .url(MyApplication.getInstance().apiUrl + "loginAuth.php")
+//                .url("http://10.0.2.2/FinMed_nemu-master/loginAuth.php")
+                .url(MyApplication.getInstance().apiUrl + "loginAuth.php")
                 .post(requestBody)
                 .build()
             // リクエスト送信（非同期処理

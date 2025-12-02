@@ -7,8 +7,8 @@
 
     <View
         android:id="@+id/view2"
-        android:layout_width="98dp"
-        android:layout_height="108dp"
+        android:layout_width="92dp"
+        android:layout_height="145dp"
         android:layout_marginStart="13dp"
         android:layout_marginTop="4dp"
         android:background="#83A8C7"
@@ -17,8 +17,8 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="283dp"
-        android:layout_height="108dp"
+        android:layout_width="277dp"
+        android:layout_height="145dp"
         android:layout_marginTop="4dp"
         android:background="#E0E0E0"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,97 +26,11 @@
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/medImg"
-        android:layout_width="70dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="4dp"
-        android:background="#E0E0E0"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintHorizontal_bias="0.535"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        tools:srcCompat="@drawable/noimage" />
-
-    <TextView
-        android:id="@+id/expDateText"
-        android:layout_width="41dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:text="使用期限"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@+id/medImg" />
-
-    <TextView
-        android:id="@+id/dateConText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        android:text="date"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@+id/expDateText" />
-
-    <TextView
-        android:id="@+id/MedNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:text="MedName"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view" />
-
-    <TextView
-        android:id="@+id/effectText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="効能・効果："
-        app:layout_constraintStart_toEndOf="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@+id/MedNameText" />
-
-    <TextView
-        android:id="@+id/remainingText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
-        android:text="残回数："
-        app:layout_constraintStart_toEndOf="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@+id/effectText" />
-
-    <TextView
-        android:id="@+id/remainingConText"
-        android:layout_width="85dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="8dp"
-        android:text="remaining"
-        app:layout_constraintStart_toEndOf="@+id/remainingText"
-        app:layout_constraintTop_toBottomOf="@+id/effectConText" />
-
-    <TextView
-        android:id="@+id/effectConText"
-        android:layout_width="106dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="48dp"
-        android:text="effect"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/effectText"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/usingButton"
-        android:layout_width="80dp"
-        android:layout_height="46dp"
+        android:layout_width="63dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
         android:backgroundTint="#61CA74"
         android:gravity="center"
         android:padding="0dp"
@@ -127,17 +41,106 @@
         android:textStyle="bold"
         app:cornerRadius="10dp"
         app:iconPadding="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.965" />
+        app:layout_constraintVertical_bias="0.888" />
+
+    <ImageView
+        android:id="@+id/medImg"
+        android:layout_width="75dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="12dp"
+        android:background="#E0E0E0"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        tools:srcCompat="@drawable/noimage" />
+
+    <TextView
+        android:id="@+id/expDateText"
+        android:layout_width="54dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:text="使用期限"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/medImg" />
+
+    <TextView
+        android:id="@+id/dateConText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="date"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/expDateText" />
+
+    <TextView
+        android:id="@+id/MedNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="MedName"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/effectText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="効能・効果："
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/MedNameText" />
+
+    <TextView
+        android:id="@+id/remainingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:text="残回数："
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/effectText" />
+
+    <TextView
+        android:id="@+id/remainingConText"
+        android:layout_width="85dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="remaining"
+        app:layout_constraintStart_toEndOf="@+id/remainingText"
+        app:layout_constraintTop_toBottomOf="@+id/effectConText" />
+
+    <TextView
+        android:id="@+id/effectConText"
+        android:layout_width="108dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="60dp"
+        android:text="effect"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/effectText"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/deletingButton"
-        android:layout_width="28dp"
-        android:layout_height="35dp"
+        android:layout_width="31dp"
+        android:layout_height="37dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="12dp"
         android:backgroundTint="#00FFFFFF"
