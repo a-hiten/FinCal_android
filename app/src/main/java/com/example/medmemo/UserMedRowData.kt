@@ -11,6 +11,6 @@ data class UserMedRowData(
     val medName : String,  //薬の名前
     val expDate : String,    //薬の使用期限
     val effect : String,    //効能・効果
-    val remaining : String, //薬の残り回数
+    var remaining : String, //薬の残り回数
     val medImage : String,  //薬の画像パス
 )

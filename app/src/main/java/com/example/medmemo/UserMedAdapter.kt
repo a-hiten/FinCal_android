@@ -64,7 +64,9 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
         // ビューホルダーのオブジェクトに対象行のデータ（薬名、効果、残数、使用期限）をセットする
         holder.medName.text = dataset[position].medName
         holder.effectCon.text = dataset[position].effect
-        holder.remainingCon.text = dataset[position].remaining.toString()
+//        holder.remainingCon.text = dataset[position].remaining.toString()
+        holder.remainingCon.text = "${dataset[position].remaining} 回"
+
         holder.dateCon.text = dataset[position].expDate.toString()
 
 
@@ -88,6 +90,49 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
         } else {
             // パスが空ならデフォルト画像を表示
             holder.medImg.setImageResource(R.drawable.noimage)
+        }
+
+        //usingButtonのクリックリスナーを生成する
+        holder.usingButton.setOnClickListener {
+            // String型のremainingをIntに変換 変換できなかったら０にする
+            val currentRemaining = item.remaining.toIntOrNull() ?: 0
+
+            //残数が０より大きい場合だけ減らす
+            if (currentRemaining > 0) {
+                //残数を一減らす
+                val newRemaining = currentRemaining - 1
+
+                // datasetのremainingを更新する
+                item.remaining = newRemaining.toString()
+
+                // TextViewに反映して後ろに「回」をつける
+                holder.remainingCon.text = "${newRemaining} 回"
+
+                // 残数が０になったら赤色、それ以外は黒にする
+                if (newRemaining == 0) {
+                    holder.remainingCon.setTextColor(android.graphics.Color.RED)
+                } else {
+                    holder.remainingCon.setTextColor(android.graphics.Color.BLACK)
+                }
+            } else {
+                //減らせなくなったらトーストをだす。
+                Toast.makeText(context, "これ以上減らせません", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //deletingButtonのクリックリスナーを生成する
+        holder.deletingButton.setOnClickListener{
+            //dataset から押されたアイテムを削除
+            dataset.removeAt(position)
+
+            //RecyclerView に「この行が削除された」と通知
+            notifyItemRemoved(position)
+
+            //もしデータの順番に影響がある場合は通知を追加
+            notifyItemRangeChanged(position, dataset.size)
+
+            //必要に応じてトースト表示
+            Toast.makeText(context, "削除しました", Toast.LENGTH_SHORT).show()
         }
 
         /*
