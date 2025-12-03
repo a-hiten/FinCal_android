@@ -22,7 +22,7 @@
         android:layout_marginTop="4dp"
         android:background="#E0E0E0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -103,6 +103,7 @@
         android:layout_marginTop="4dp"
         android:text="効能・効果："
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/MedNameText" />
 
@@ -113,6 +114,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
         android:text="残回数："
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/effectText" />
 
@@ -121,8 +123,9 @@
         android:layout_width="85dp"
         android:layout_height="19dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="remaining"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/remainingText"
         app:layout_constraintTop_toBottomOf="@+id/effectConText" />
 
@@ -131,11 +134,12 @@
         android:layout_width="106dp"
         android:layout_height="46dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="4dp"
         android:text="effect"
-        android:textSize="10sp"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/effectText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/MedNameText" />
 
     <ImageButton
         android:id="@+id/deletingButton"

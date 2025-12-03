@@ -7,30 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".MedicineActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userMedlineRecycle"
-        android:layout_width="385dp"
-        android:layout_height="599dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.657"
-        tools:listitem="@layout/usermed_recycle_row" />
-
     <TextView
         android:id="@+id/textView"
-        android:layout_width="413dp"
-        android:layout_height="86dp"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
+        android:layout_marginBottom="24dp"
         android:background="#759FC1"
         android:gravity="center"
         android:text="TextView"
         android:textColor="#0D47A1"
         android:textSize="34sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/userMedlineRecycle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/userMedlineRecycle"
+        android:layout_width="398dp"
+        android:layout_height="648dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:listitem="@layout/usermed_recycle_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
