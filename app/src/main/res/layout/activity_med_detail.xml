@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="413dp"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
         android:background="#759FC1"
         android:gravity="center"
         android:text="TextView"
@@ -33,28 +33,31 @@
         android:hapticFeedbackEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.555" />
 
     <TextView
         android:id="@+id/comboConText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:text="contraindication"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="76dp"
-        tools:layout_editor_absoluteY="590dp" />
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/comboText" />
 
     <TextView
         android:id="@+id/medtypeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
         android:text="medType"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="324dp" />
+        app:layout_constraintStart_toEndOf="@+id/medTypeText"
+        app:layout_constraintTop_toBottomOf="@+id/medNameConText" />
 
     <TextView
         android:id="@+id/medNameConText"
@@ -75,111 +78,140 @@
         android:id="@+id/ageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="44dp"
         android:text="年齢："
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="218dp" />
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/medNameConText" />
 
     <TextView
         android:id="@+id/ageCntText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="age"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="218dp" />
+        app:layout_constraintStart_toEndOf="@+id/ageText"
+        app:layout_constraintTop_toBottomOf="@+id/medNameConText" />
 
     <TextView
         android:id="@+id/quantityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
         android:text="1回量："
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="267dp" />
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/ageText" />
 
     <TextView
         android:id="@+id/medConText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
         android:text="medcon"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="267dp" />
+        app:layout_constraintStart_toEndOf="@+id/quantityText"
+        app:layout_constraintTop_toBottomOf="@+id/medNameConText" />
 
     <TextView
         android:id="@+id/medTypeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:text="販売区分："
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="324dp" />
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/quantityText" />
 
     <TextView
         android:id="@+id/takeTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
         android:text="１日服薬回数："
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="375dp" />
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/medTypeText" />
 
     <TextView
         android:id="@+id/takeTimeConText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="196dp"
         android:text="medTakeTime"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="207dp"
-        tools:layout_editor_absoluteY="373dp" />
+        app:layout_constraintStart_toEndOf="@+id/takeTimeText"
+        app:layout_constraintTop_toBottomOf="@+id/medNameConText" />
 
     <TextView
         android:id="@+id/effectText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="32dp"
         android:text="効能・効果"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="446dp" />
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/takeTimeText" />
 
     <TextView
         android:id="@+id/effectConText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="4dp"
         android:text="effect"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="76dp"
-        tools:layout_editor_absoluteY="486dp" />
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/effectText" />
 
     <TextView
         android:id="@+id/comboText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="44dp"
         android:text="併用禁止"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="549dp" />
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/effectConText" />
 
     <Button
         android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#6D89FF"
         android:text="編集"
-        tools:layout_editor_absoluteX="270dp"
-        tools:layout_editor_absoluteY="643dp" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="@+id/view3"
+        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintStart_toStartOf="@+id/view3" />
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="45dp"
-        android:layout_height="37dp"
-        app:srcCompat="@drawable/returnbutton"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="126dp" />
+        android:layout_width="30dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:background="@null"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toTopOf="@+id/view3"
+        app:srcCompat="@drawable/returnbutton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

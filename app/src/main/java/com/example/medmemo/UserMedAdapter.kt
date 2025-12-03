@@ -64,16 +64,25 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
         // ビューホルダーのオブジェクトに対象行のデータ（薬名、効果、残数、使用期限）をセットする
         holder.medName.text = dataset[position].medName
         holder.effectCon.text = dataset[position].effect
-//        holder.remainingCon.text = dataset[position].remaining.toString()
         holder.remainingCon.text = "${dataset[position].remaining} 回"
-
         holder.dateCon.text = dataset[position].expDate.toString()
-
-
+        //確認用ログ
         Log.d("aaa",holder.medName.text.toString())
         Log.d("aaa",holder.effectCon.text.toString())
         Log.d("aaa",holder.remainingCon.text.toString())
         Log.d("aaa",holder.dateCon.text.toString())
+
+        holder.medName.setOnClickListener {
+            val intent = android.content.Intent(context, MedDetailActivity::class.java).apply {
+                putExtra("medNo", item.medNo)
+                putExtra("medName", item.medName)
+                putExtra("effect", item.effect)
+                putExtra("remaining", item.remaining)
+                putExtra("expDate", item.expDate)
+                putExtra("medImage", item.medImage)
+            }
+            context.startActivity(intent)
+        }
 
         //画像表示処理
         // 画像パスが登録されているかチェック

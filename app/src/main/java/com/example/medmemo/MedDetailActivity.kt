@@ -1,6 +1,7 @@
 package com.example.medmemo
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,5 +17,9 @@ class MedDetailActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // 画面デザインで定義したオブジェクトを変数として宣言する。
+        val titleText = findViewById<TextView>(R.id.textView)   // ページのタイトルの部
+        titleText.text = "薬の編集画面"
+
     }
 }
