@@ -17,9 +17,11 @@
         android:theme="@style/Theme.Medmemo"
         tools:targetApi="31">
         <activity
-            android:name=".MedDetailActivity"
+            android:name=".MedEditActivity"
             android:exported="false" />
-        <!-- <activity -->
+        <activity
+            android:name=".MedDetailActivity"
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".test_activity" -->
         <!-- android:exported="false" /> -->
         <activity

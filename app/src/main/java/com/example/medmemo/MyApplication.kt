@@ -29,4 +29,8 @@ class MyApplication : Application(){
         instance = this
     }
 
+    //権限の選択
+    val roleList = listOf("user","admin")
+
+
 }
