@@ -47,89 +47,90 @@ class MedDetailActivity : AppCompatActivity() {
         val medType = findViewById<TextView>(R.id.medTypeConText)
         val medTakeTime = findViewById<TextView>(R.id.takeTimeConText)
         val effect = findViewById<TextView>(R.id.effectConText)
-        val contraindication =findViewById<TextView>(R.id.comboConText)
+        val contraindication = findViewById<TextView>(R.id.comboConText)
         val returnButton = findViewById<ImageButton>(R.id.returnButton)
         val editButton = findViewById<Button>(R.id.editButton)
 
+        //戻る矢印押したら前の場面にもどる
+        returnButton.setOnClickListener {
+            finish()
+        }
+
+        //前の画面からMedNoを取ってくる
         val medNo = intent.getIntExtra("medNo", -1)
-        Log.d("MedNoだよ","うけとりました medNo= $medNo")
+        Log.d("MedNoだよ", "うけとりました medNo= $medNo")
+
+        // HTTP接続用インスタンス生成
+        val client = OkHttpClient()
+        // JSON形式でパラメータを送るようなデータ形式を設定
+        val mediaType: MediaType = "application/json; charset=utf-8".toMediaType()
+        // Bodyのデータ（APIに渡したいパラメータを設定）
+        val requestBodyJson = JSONObject().apply {
+            put("medNo", medNo)
+        }
+        // BodyのデータをAPIに送る為にRequestBody形式に加工
+        val requestBody = requestBodyJson.toString().toRequestBody(mediaType)
+
+        // Requestを作成
+        val request = Request.Builder()
+            .url(MyApplication.getInstance().apiUrl + "medDetail.php")
+            .post(requestBody)
+            .build()
+
+        //グローバル変数のログインユーザIDを取得
+//            val loginUserId = MyApplication.getInstance().loginUserId
 
 
+        // リクエスト送信（非同期処理）
+        client.newCall(request).enqueue(object : Callback {
+            // １－２－２－１．正常にレスポンスを受け取った時(コールバック処理)
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
 
-        medNameCon.setOnClickListener {
+                // ログ
+                println("なかみだよ～" + body)
 
-            //グローバル変数のログインユーザIDを取得
-            val loginUserId = MyApplication.getInstance().loginUserId
+                // APIから取得したJSON文字列をJSONオブジェクトに変換
+                runOnUiThread {
+                    val json = JSONObject(body)
+                    val status = json.optString("status", json.optString("result", "error"))
 
-            // ログイン認証APIをリクエストして入力ユーザのログイン認証を行う
-            // HTTP接続用インスタンス生成
-            val client = OkHttpClient()
-            // JSON形式でパラメータを送るようなデータ形式を設定
-            val mediaType: MediaType = "application/json; charset=utf-8".toMediaType()
-            // Bodyのデータ（APIに渡したいパラメータを設定）
-            val requestBodyJson = JSONObject().apply {
-                put("userId", loginUserId)
-            }
-            // BodyのデータをAPIに送る為にRequestBody形式に加工
-            val requestBody = requestBodyJson.toString().toRequestBody(mediaType)
-
-            // Requestを作成
-            val request = Request.Builder()
-                .url(MyApplication.getInstance().apiUrl + "medDetail.php")
-                .post(requestBody)
-                .build()
-            // リクエスト送信（非同期処理）
-            client.newCall(request).enqueue(object : Callback {
-                // １－２－２－１．正常にレスポンスを受け取った時(コールバック処理)
-                override fun onResponse(call: Call, response: Response) {
-                    val body = response.body?.string()
+                    if (status != "success") {
+                        val errorMsg = json.optString("error", "エラーが発生しました。")
+                        runOnUiThread {
+                            Toast.makeText(applicationContext, errorMsg, Toast.LENGTH_SHORT)
+                                .show()
+                            return@runOnUiThread
+                        }
+                    }
+                    val medicals = json.optJSONObject("medicineInfo") ?: JSONObject()
 
                     // ログ
-                    println("なかみだよ～" + body)
+                    Log.d("UserMed", "whispers length = ${medicals.length()}")
 
-                    // APIから取得したJSON文字列をJSONオブジェクトに変換
-                    runOnUiThread {
-                        val json = JSONObject(body)
-                        val status = json.optString("status", json.optString("result", "error"))
+                    medNameCon.text = medicals.optString("medName")
+                    ageCon.text = medicals.optInt("ageLimit").toString()
+                    medCon.text = medicals.optString("dosage")
+                    medType.text = medicals.optString("medType")
+                    medTakeTime.text = medicals.optInt("medTakeTime").toString()
+                    effect.text = medicals.optString("effect")
+                    contraindication.text = medicals.optString("contraindication")
 
-                        if (status != "success") {
-                            val errorMsg = json.optString("error", "エラーが発生しました。")
-                            runOnUiThread {
-                                Toast.makeText(applicationContext, errorMsg, Toast.LENGTH_SHORT)
-                                    .show()
-                                return@runOnUiThread
-                            }
-                        }
-                        val medicals = json.optJSONObject("medicineInfo") ?: JSONObject()
-
-                        // ログ
-                        Log.d("UserMed", "loginUserId = $loginUserId")
-                        Log.d("UserMed", "whispers length = ${medicals.length()}")
-
-                        medNameCon.text = medicals.optString("medName")
-                        ageCon.text = medicals.optInt("ageLimit").toString()
-                        medCon.text = medicals.optString("dosage")
-                        medType.text = medicals.optString("medType")
-                        medTakeTime.text = medicals.optInt("medTakeTime").toString()
-                        effect.text = medicals.optString("effect")
-                        contraindication.text = medicals.optString("contraindication")
-
-                    }
                 }
+            }
 
-                override fun onFailure(call: Call, e: IOException) {
-                    // ２－３－２－１．エラーメッセージをトースト表示する
-                    runOnUiThread {
-                        Toast.makeText(
-                            applicationContext,
-                            "リクエストに失敗しました。",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
+            override fun onFailure(call: Call, e: IOException) {
+                // ２－３－２－１．エラーメッセージをトースト表示する
+                runOnUiThread {
+                    Toast.makeText(
+                        applicationContext,
+                        "リクエストに失敗しました。",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
                 }
-            })
-        }
+            }
+        })
 
     }
 }
