@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/comboText" />
 
     <TextView
-        android:id="@+id/medtypeText"
+        android:id="@+id/medTypeConText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="148dp"
@@ -203,7 +203,7 @@
         app:layout_constraintStart_toStartOf="@+id/view3" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/returnButton"
         android:layout_width="30dp"
         android:layout_height="28dp"
         android:layout_marginStart="12dp"
