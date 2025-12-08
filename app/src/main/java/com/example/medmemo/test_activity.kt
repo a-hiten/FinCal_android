@@ -34,7 +34,7 @@ class test_activity : AppCompatActivity() {
         val client = OkHttpClient()
 
         val request = Request.Builder()
-            .url("http://10.0.2.2/FinMed_nemu-master/test.php") // 実際のAPI URL
+            .url("http://10.200.0.56/FinMed_nemu-master/test.php") // 実際のAPI URL
             .get()
             .build()
 
