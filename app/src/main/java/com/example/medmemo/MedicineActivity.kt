@@ -2,6 +2,7 @@ package com.example.medmemo
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -24,7 +25,7 @@ import java.io.IOException
 
 // １．OverFlowMenuActivityクラスを継承する(今後追加)
 
-class MedicineActivity : AppCompatActivity() {
+class MedicineActivity : OverflowMenu() {
     // ２．画面生成時（onCreate処理）
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,4 +125,11 @@ class MedicineActivity : AppCompatActivity() {
         })
 
     }
-}
+    //オーバーフロー
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return OverflowMenu.handleMenuItemSelected(
+            this,
+            item
+        ) || super.onOptionsItemSelected(item)
+    }
+    }

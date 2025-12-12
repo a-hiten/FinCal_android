@@ -10,7 +10,8 @@ class MyApplication : Application(){
 
     //３．グローバル変数apiUrlを文字列型で宣言して、各チームのAPIのホームディレクトリで初期化する
     //ホームディレクトリ例 ： http://click.ecc.ac.jp/ecc/whisperSystem/
-    val apiUrl: String = "http://10.200.0.56/FinMed_nemu-master/"
+//    val apiUrl: String = "http://10.200.0.56/FinMed_nemu-master/"
+    val apiUrl: String = "http://10.109.1.58/FinMed_nemu-master/"
 
     //４．AndroidManifest設定
     companion object {
