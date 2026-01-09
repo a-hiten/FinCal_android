@@ -126,10 +126,17 @@ class MedicineActivity : OverflowMenu() {
 
     }
     //オーバーフロー
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return OverflowMenu.handleMenuItemSelected(this,item) || super.onOptionsItemSelected(item)
+//    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return OverflowMenu.handleMenuItemSelected(
-            this,
-            item
-        ) || super.onOptionsItemSelected(item)
+        return handleMenuItemSelected(this, item)
     }
-    }
+
+}
+
+
+
+
+
