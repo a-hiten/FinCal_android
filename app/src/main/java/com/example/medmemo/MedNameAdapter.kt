@@ -1,6 +1,7 @@
 package com.example.medmemo
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,14 @@ class MedNameAdapter(private val dataset:MutableList<MedNameRowData>,private val
 
         //取得したデータを画面に表示している項目を設定する。
         //ビューホルダーのオブジェクトに対象行のデータ（薬名）をセットする
+        holder.MedButton.text = dataset[position].medName
+        //ログ
+        Log.d("aaa",holder.MedButton.text.toString())
+
+//        holder.MedButton.setOnClickListener {
+//
+//        }
+
 
     }
 

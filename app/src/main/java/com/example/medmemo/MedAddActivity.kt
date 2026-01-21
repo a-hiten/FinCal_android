@@ -51,88 +51,88 @@ class MedAddActivity : OverflowMenu() {
         val recyclerView = findViewById<RecyclerView>(R.id.userMedlineRecycle)      // リストの内容は薬の名前行情報を指定している
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // グローバル変数のログインユーザーIDを取得。
-        val loginUserId = MyApplication.getInstance().loginUserId
+        searchButton.setOnClickListener {
+            val searchWord = searchEdit.text.toString()
 
-        // ログイン認証APIをリクエストして入力ユーザのログイン認証を行う
-        // HTTP接続用インスタンス生成
-        val client = OkHttpClient()
-        // JSON形式でパラメータを送るようなデータ形式を設定
-        val mediaType: MediaType = "application/json; charset=utf-8".toMediaType()
-        // Bodyのデータ（APIに渡したいパラメータを設定）
-        val requestBodyJson = JSONObject().apply {
-            put("userId", loginUserId)
-        }
-        // BodyのデータをAPIに送る為にRequestBody形式に加工
-        val requestBody = requestBodyJson.toString().toRequestBody(mediaType)
+            if(searchWord.isBlank()){
+                Toast.makeText(this,"検索欄に文字を入力してください。",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-        // Requestを作成
-        val request = Request.Builder()
-            .url(MyApplication.getInstance().apiUrl + "userMedInfo.php")
-            .post(requestBody)
-            .build()
-        // リクエスト送信（非同期処理）
-        client.newCall(request).enqueue(object : Callback {
-            // １－２－２－１．正常にレスポンスを受け取った時(コールバック処理)
-            override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string()
+            // ログイン認証APIをリクエストして入力ユーザのログイン認証を行う
+            // HTTP接続用インスタンス生成
+            val client = OkHttpClient()
+            // JSON形式でパラメータを送るようなデータ形式を設定
+            val mediaType: MediaType = "application/json; charset=utf-8".toMediaType()
+            // Bodyのデータ（APIに渡したいパラメータを設定）
+            val requestBodyJson = JSONObject().apply {
+                put("string", searchWord)
+            }
+            // BodyのデータをAPIに送る為にRequestBody形式に加工
+            val requestBody = requestBodyJson.toString().toRequestBody(mediaType)
 
-                // ログ
-                println("なかみだよ～" + body)
-
-                // APIから取得したJSON文字列をJSONオブジェクトに変換
-                runOnUiThread {
-                    val json = JSONObject(body)
-                    val status = json.optString("status", json.optString("result", "error"))
-
-                    if (status != "success") {
-                        val errorMsg = json.optString("error", "エラーが発生しました。")
-                        runOnUiThread {
-                            Toast.makeText(applicationContext, errorMsg, Toast.LENGTH_SHORT).show()
-                            return@runOnUiThread
-                        }
-                    }
-
-                    val userMedList = mutableListOf<UserMedRowData>()
-                    val usermeds = json.optJSONArray("userMedList") ?: JSONArray()
+            // Requestを作成
+            val request = Request.Builder()
+                .url(MyApplication.getInstance().apiUrl + "searchMed.php")
+                .post(requestBody)
+                .build()
+            // リクエスト送信（非同期処理）
+            client.newCall(request).enqueue(object : Callback {
+                // １－２－２－１．正常にレスポンスを受け取った時(コールバック処理)
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response.body?.string()
 
                     // ログ
-                    Log.d("UserMed", "loginUserId = $loginUserId")
-                    Log.d("UserMed", "whispers length = ${usermeds.length()}")
+                    println("なかみだよ～" + body)
 
-                    for (i in 0 until usermeds.length()) {
-                        val obj = usermeds.getJSONObject(i)
-                        val data = UserMedRowData(
-                            userId = obj.optString("userId"),
-                            userName = obj.optString("userName"),
-                            userMedNo = obj.optInt("userMedNo"),
-                            medNo = obj.optInt("medNo"),
-                            medName = obj.optString("medName"),
-                            expDate = obj.optString("expDate"),
-                            effect = obj.optString("effect"),
-                            remaining = obj.optInt("remaining").toString(),
-                            medImage = "",
-                        )
-                        userMedList.add(data)
+                    // APIから取得したJSON文字列をJSONオブジェクトに変換
+                    runOnUiThread {
+                        val json = JSONObject(body)
+                        val status = json.optString("status", json.optString("result", "error"))
+
+                        if (status != "success") {
+                            val errorMsg = json.optString("error", "エラーが発生しました。")
+                            runOnUiThread {
+                                Toast.makeText(applicationContext, errorMsg, Toast.LENGTH_SHORT)
+                                    .show()
+                                return@runOnUiThread
+                            }
+                        }
+
+                        val medNameList = mutableListOf<MedNameRowData>()
+                        val mednames = json.optJSONArray("medList") ?: JSONArray()
+
+                        // ログ
+                        Log.d("medName", "medNameList = $medNameList")
+                        Log.d("medName", "mednames = ${mednames.length()}")
+
+                        for (i in 0 until mednames.length()) {
+                            val obj = mednames.getJSONObject(i)
+                            val data = MedNameRowData(
+                                medNo = obj.optInt("medNo"),
+                                medName = obj.optString("medName"),
+                            )
+                            medNameList.add(data)
+                        }
+                        val recyclerView = findViewById<RecyclerView>(R.id.userMedlineRecycle)
+                        recyclerView.adapter = MedNameAdapter(medNameList, this@MedAddActivity)
                     }
-                    val recyclerView = findViewById<RecyclerView>(R.id.userMedlineRecycle)
-//                    recyclerView.layoutManager = LinearLayoutManager(this@MedicineActivity)
-//                    recyclerView.adapter = UserMedAdapter(userMedList, this@MedicineActivity)
                 }
-            }
 
-            override fun onFailure(call: Call, e: IOException) {
-                // ２－３－２－１．エラーメッセージをトースト表示する
-                runOnUiThread {
-                    Toast.makeText(
-                        applicationContext,
-                        "リクエストに失敗しました。",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                override fun onFailure(call: Call, e: IOException) {
+                    // ２－３－２－１．エラーメッセージをトースト表示する
+                    runOnUiThread {
+                        Toast.makeText(
+                            applicationContext,
+                            "リクエストに失敗しました。",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
-            }
-        })
+            })
+
+        }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return handleMenuItemSelected(this, item)
