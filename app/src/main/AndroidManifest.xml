@@ -17,11 +17,13 @@
         android:theme="@style/Theme.Medmemo"
         tools:targetApi="31">
         <activity
-            android:name=".MedAddActivity"
+            android:name=".MedInputActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".OverflowMenu"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".MedAddActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".OverflowMenu" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".MedEditActivity"
             android:exported="false" />
