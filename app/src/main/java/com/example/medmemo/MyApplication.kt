@@ -14,10 +14,13 @@ class MyApplication : Application(){
 //    val apiUrl: String = "http://10.109.1.58/FinMed_nemu-master/"
 //    val apiUrl: String = "http://10.109.2.3/FinMed_nemu-master/"
 //    val apiUrl: String = "http://10.109.2.10/FinMed_nemu-master/"
+        val apiUrl: String = "http://10.109.1.206/FinMed_nemu-master/"
 
 
 
-    val apiUrl: String = "http://10.0.2.2/FinMed_nemu-master/"
+//    val apiUrl: String = "http://10.0.2.2/FinMed_nemu-master/"
+
+
 
 
 

@@ -1,6 +1,7 @@
 package com.example.medmemo
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ class MedNameAdapter(private val dataset:MutableList<MedNameRowData>,private val
 
         //画面デザインで定義したオブジェクトを変数として宣言する
         val MedButton : Button
+
 
         init {
             MedButton = item.findViewById(R.id.MedButton)
@@ -40,9 +42,20 @@ class MedNameAdapter(private val dataset:MutableList<MedNameRowData>,private val
         //ログ
         Log.d("aaa",holder.MedButton.text.toString())
 
-//        holder.MedButton.setOnClickListener {
-//
-//        }
+        // ボタンに薬名を表示
+        holder.MedButton.text = item.medName
+
+        // ログ（確認用）
+        Log.d("MedNameAdapter", item.medName)
+
+        // MedNameButtonボタンを押したときだけ遷移
+        holder.MedButton.setOnClickListener {
+            val intent = Intent(context, MedInputActivity::class.java).apply {
+                putExtra("medNo", item.medNo)
+                putExtra("medName", item.medName)
+            }
+            context.startActivity(intent)
+        }
 
 
     }
