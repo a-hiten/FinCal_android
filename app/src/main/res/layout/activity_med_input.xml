@@ -36,7 +36,7 @@
         app:layout_constraintVertical_bias="0.666" />
 
     <TextView
-        android:id="@+id/medName5"
+        android:id="@+id/medName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -57,7 +57,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/view10"
-        app:layout_constraintTop_toBottomOf="@+id/medName5" />
+        app:layout_constraintTop_toBottomOf="@+id/medName" />
 
     <EditText
         android:id="@+id/remainingEditText"
@@ -69,7 +69,7 @@
         android:hint="remaining"
         android:inputType="text"
         app:layout_constraintStart_toEndOf="@+id/remainingText"
-        app:layout_constraintTop_toBottomOf="@+id/medName5" />
+        app:layout_constraintTop_toBottomOf="@+id/medName" />
 
     <TextView
         android:id="@+id/expDateText"
