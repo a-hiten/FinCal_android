@@ -46,7 +46,6 @@ class MedicineActivity : OverflowMenu() {
         val titleText = findViewById<TextView>(R.id.textView)   // ページのタイトルの部
         titleText.text = "現在使用中のお薬"
 
-        // ２－２．グローバル変数のログインユーザーIDを取得
         val recyclerView = findViewById<RecyclerView>(R.id.userMedlineRecycle)      // リストの内容は自分のお薬行情報を参照している
         recyclerView.layoutManager = LinearLayoutManager(this)
 

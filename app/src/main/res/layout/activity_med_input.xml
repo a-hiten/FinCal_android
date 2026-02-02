@@ -68,6 +68,7 @@
         android:ems="10"
         android:hint="remaining"
         android:inputType="text"
+        android:textColor="#000000"
         app:layout_constraintStart_toEndOf="@+id/remainingText"
         app:layout_constraintTop_toBottomOf="@+id/medName" />
 
@@ -92,6 +93,7 @@
         android:ems="10"
         android:hint="date"
         android:inputType="text"
+        android:textColor="#000000"
         app:layout_constraintStart_toEndOf="@+id/expDateText"
         app:layout_constraintTop_toBottomOf="@+id/remainingEditText" />
 
