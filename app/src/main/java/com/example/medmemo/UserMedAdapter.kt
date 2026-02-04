@@ -102,36 +102,6 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
             holder.medImg.setImageResource(R.drawable.noimage)
         }
 
-        //usingButtonのクリックリスナーを生成する
-//        holder.usingButton.setOnClickListener {
-//            // String型のremainingをIntに変換 変換できなかったら０にする
-//            val currentRemaining = item.remaining.toIntOrNull() ?: 0
-//
-//            //残数が０より大きい場合だけ減らす
-//            if (currentRemaining > 0) {
-//                //残数を一減らす
-//                val newRemaining = currentRemaining - 1
-//
-//                // datasetのremainingを更新する
-//                item.remaining = newRemaining.toString()
-//
-//                // TextViewに反映して後ろに「回」をつける
-//                holder.remainingCon.text = "${newRemaining} 回"
-//                val remainingValue = item.remaining.toIntOrNull() ?: 0
-//
-//                // 残数が０になったら赤色、それ以外は黒にする
-//                if (remainingValue == 0) {
-//                    holder.remainingCon.setTextColor(android.graphics.Color.RED)
-//                } else {
-//                    holder.remainingCon.setTextColor(android.graphics.Color.BLACK)
-//                }
-//            } else {
-//                //減らせなくなったらトーストをだす。
-//                Toast.makeText(context, "これ以上減らせません", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-
-
         //残数をtextViewに表示して「回」をつける
         holder.remainingCon.text = "${item.remaining} 回"
 
@@ -145,21 +115,91 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
             holder.remainingCon.setTextColor(Color.BLACK)
         }
 
-        //使用ボタンを押したときの処理
+        //usingButtonのクリックリスナーを生成する
         holder.usingButton.setOnClickListener {
             //現在の残数を取得する
             val current = item.remaining.toIntOrNull() ?: 0
-            //残数が１以上のときだけ減らす
-            if (current > 0) {
-                //残数を１減らしてdatasetに保存している
-                item.remaining = (current - 1).toString()
-                //再描画する
-                //色の判定も自動でやり直される
-                notifyItemChanged(holder.adapterPosition)
-            } else {
-                //残数が０の場合トーストを表示させる
+//            //残数が１以上のときだけ減らす
+//            if (current > 0) {
+//                //残数を１減らしてdatasetに保存している
+//                item.remaining = (current - 1).toString()
+//                //再描画する
+//                //色の判定も自動でやり直される
+//                notifyItemChanged(holder.adapterPosition)
+//            } else {
+//                //残数が０の場合トーストを表示させる
+//                Toast.makeText(context, "これ以上減らせません", Toast.LENGTH_SHORT).show()
+//            }
+
+            // 残数が0なら何もしない
+            if (current <= 0) {
                 Toast.makeText(context, "これ以上減らせません", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+//            ------------------------------
+            // HTTP接続用インスタンス生成
+            val client = OkHttpClient()
+            // JSON形式でパラメータを送るようデータ形式を設定
+            val mediaType: MediaType = "application/json; charset=utf-8".toMediaType()
+            // Bodyのデータ(APIに渡したいパラメータを設定)
+            val requestBodyJson = JSONObject().apply {
+                put("action", "decrease")
+                put("userId", MyApplication.getInstance().loginUserId)
+                put("userMedNo", item.userMedNo)
+            }
+            Log.d("ぱらめーたのなまえかくにん", requestBodyJson.toString())
+
+            // BodyのデータをAPIに送るためにRequestBody形式に加工
+            val requestBody = requestBodyJson.toString().toRequestBody(mediaType)
+            // Requestを作成(先ほど設定したデータ形式とパラメータ情報をもとにリクエストデータを作成)
+            val request = Request.Builder()
+                .url(MyApplication.getInstance().apiUrl + "usingCtl.php")
+                .post(requestBody) // リクエストするパラメータ設定
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                // 正常にレスポンスを受け取った時(コールバック処理)
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyStr = response.body?.string().orEmpty()
+                    (context as? android.app.Activity)?.runOnUiThread {
+                        //一次的に追記（落ちないようにしている）
+                        if (!bodyStr.trim().startsWith("{")) {
+                            Toast.makeText(context, "サーバーエラー（JSON形式ではありません）", Toast.LENGTH_SHORT).show()
+                            Log.d("server_error", bodyStr) // ←エラーメッセージ確認できる
+                            return@runOnUiThread
+                        }
+
+                        val json = JSONObject(bodyStr)
+                        val status = json.optString("status", json.optString("result", "error"))
+
+                        // JSONデータがエラーの場合、受け取ったエラーメッセージをトースト表示して処理を終了させる
+                        if (status != "success") {
+                            val errMsg = json.optString("error", "失敗しました。")
+                            Toast.makeText(context, errMsg, Toast.LENGTH_SHORT)
+                                .show()
+                            return@runOnUiThread
+                        }
+                        // 成功した時だけ残数を一ずつ減らす
+                        item.remaining = (current - 1).toString()
+
+                        //再描画する
+                        notifyItemChanged(holder.adapterPosition)
+                    }
+                }
+
+                // リクエストが失敗した時(コールバック処理)
+                override fun onFailure(call: Call, e: IOException) {
+                    // エラーメッセージをトースト表示する
+                    (context as? android.app.Activity)?.runOnUiThread {
+                        Toast.makeText(context, "リクエストが失敗しました", Toast.LENGTH_SHORT)
+                            .show()
+                        return@runOnUiThread
+                    }
+                }
+            })
+
+
         }
 
         //削除ボタンを押されたときの処理
@@ -176,68 +216,14 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
             }
         }
 
-        /*
-        // HTTP接続用インスタンス生成
-        val client = OkHttpClient()
-        // JSON形式でパラメータを送るようデータ形式を設定
-        val mediaType: MediaType = "application/json; charset=utf-8".toMediaType()
-        // Bodyのデータ(APIに渡したいパラメータを設定)
-        val requestBodyJson = JSONObject().apply {
-            put("userId", MyApplication.getInstance().loginUserId)
-            put("userMedNo",item.userMedNo)
-            put("medNo", item.medName)
-        }
-        Log.d("ぱらめーたのなまえかくにん", requestBodyJson.toString())
-
-        // BodyのデータをAPIに送るためにRequestBody形式に加工
-        val requestBody = requestBodyJson.toString().toRequestBody(mediaType)
-        // Requestを作成(先ほど設定したデータ形式とパラメータ情報をもとにリクエストデータを作成)
-        val request = Request.Builder()
-            .url(MyApplication.getInstance().apiUrl + "まだだよ.php")
-            .post(requestBody) // リクエストするパラメータ設定
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            // 正常にレスポンスを受け取った時(コールバック処理)
-            override fun onResponse(call: Call, response: Response) {
-                val bodyStr = response.body?.string().orEmpty()
-                (context as? android.app.Activity)?.runOnUiThread {
-                    //一次的に追記（落ちないようにしている）
-                    if (!bodyStr.trim().startsWith("{")) {
-                        Toast.makeText(context, "サーバーエラー（JSON形式ではありません）", Toast.LENGTH_SHORT).show()
-                        Log.d("server_error", bodyStr) // ←エラーメッセージ確認できる
-                        return@runOnUiThread
-                    }
 
 
-                    val json = JSONObject(bodyStr)
-                    val status = json.optString("status", json.optString("result", "error"))
 
 
-                    // JSONデータがエラーの場合、受け取ったエラーメッセージをトースト表示して処理を終了させる
-                    if (status != "success") {
-                        val errMsg = json.optString("error", "失敗しました。")
-                        Toast.makeText(context, errMsg, Toast.LENGTH_SHORT)
-                            .show()
-                        return@runOnUiThread
-                    }
-                }
-
-            }
 
 
-            // リクエストが失敗した時(コールバック処理)
-            override fun onFailure(call: Call, e: IOException) {
-                // エラーメッセージをトースト表示する
-                (context as? android.app.Activity)?.runOnUiThread {
-                    Toast.makeText(context, "リクエストが失敗しました", Toast.LENGTH_SHORT)
-                        .show()
-                    return@runOnUiThread
-                }
-            }
-        })
 
-        */
+
     }
 
 
