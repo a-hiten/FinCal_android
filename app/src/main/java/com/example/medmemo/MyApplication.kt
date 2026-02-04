@@ -14,7 +14,9 @@ class MyApplication : Application(){
 //    val apiUrl: String = "http://10.109.1.58/FinMed_nemu-master/"
 //    val apiUrl: String = "http://10.109.2.3/FinMed_nemu-master/"
 //    val apiUrl: String = "http://10.109.2.10/FinMed_nemu-master/"
-        val apiUrl: String = "http://10.109.1.206/FinMed_nemu-master/"
+//        val apiUrl: String = "http://10.109.1.206/FinMed_nemu-master/"
+    val apiUrl: String = "http://10.109.1.238/FinMed_nemu-master/"
+
 
 
 

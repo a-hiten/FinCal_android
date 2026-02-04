@@ -1,6 +1,7 @@
 package com.example.medmemo
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -102,46 +103,77 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
         }
 
         //usingButtonのクリックリスナーを生成する
+//        holder.usingButton.setOnClickListener {
+//            // String型のremainingをIntに変換 変換できなかったら０にする
+//            val currentRemaining = item.remaining.toIntOrNull() ?: 0
+//
+//            //残数が０より大きい場合だけ減らす
+//            if (currentRemaining > 0) {
+//                //残数を一減らす
+//                val newRemaining = currentRemaining - 1
+//
+//                // datasetのremainingを更新する
+//                item.remaining = newRemaining.toString()
+//
+//                // TextViewに反映して後ろに「回」をつける
+//                holder.remainingCon.text = "${newRemaining} 回"
+//                val remainingValue = item.remaining.toIntOrNull() ?: 0
+//
+//                // 残数が０になったら赤色、それ以外は黒にする
+//                if (remainingValue == 0) {
+//                    holder.remainingCon.setTextColor(android.graphics.Color.RED)
+//                } else {
+//                    holder.remainingCon.setTextColor(android.graphics.Color.BLACK)
+//                }
+//            } else {
+//                //減らせなくなったらトーストをだす。
+//                Toast.makeText(context, "これ以上減らせません", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+
+
+        //残数をtextViewに表示して「回」をつける
+        holder.remainingCon.text = "${item.remaining} 回"
+
+        //remaingのStringをIntに変換する
+        val remainingValue = item.remaining.toIntOrNull() ?: 0
+
+        //残数が０だったら赤色、それ以外は黒で表示する
+        if (remainingValue == 0) {
+            holder.remainingCon.setTextColor(Color.RED)
+        } else {
+            holder.remainingCon.setTextColor(Color.BLACK)
+        }
+
+        //使用ボタンを押したときの処理
         holder.usingButton.setOnClickListener {
-            // String型のremainingをIntに変換 変換できなかったら０にする
-            val currentRemaining = item.remaining.toIntOrNull() ?: 0
-
-            //残数が０より大きい場合だけ減らす
-            if (currentRemaining > 0) {
-                //残数を一減らす
-                val newRemaining = currentRemaining - 1
-
-                // datasetのremainingを更新する
-                item.remaining = newRemaining.toString()
-
-                // TextViewに反映して後ろに「回」をつける
-                holder.remainingCon.text = "${newRemaining} 回"
-
-                // 残数が０になったら赤色、それ以外は黒にする
-                if (newRemaining == 0) {
-                    holder.remainingCon.setTextColor(android.graphics.Color.RED)
-                } else {
-                    holder.remainingCon.setTextColor(android.graphics.Color.BLACK)
-                }
+            //現在の残数を取得する
+            val current = item.remaining.toIntOrNull() ?: 0
+            //残数が１以上のときだけ減らす
+            if (current > 0) {
+                //残数を１減らしてdatasetに保存している
+                item.remaining = (current - 1).toString()
+                //再描画する
+                //色の判定も自動でやり直される
+                notifyItemChanged(holder.adapterPosition)
             } else {
-                //減らせなくなったらトーストをだす。
+                //残数が０の場合トーストを表示させる
                 Toast.makeText(context, "これ以上減らせません", Toast.LENGTH_SHORT).show()
             }
         }
 
-        //deletingButtonのクリックリスナーを生成する
-        holder.deletingButton.setOnClickListener{
-            //dataset から押されたアイテムを削除
-            dataset.removeAt(position)
-
-            //RecyclerView に「この行が削除された」と通知
-            notifyItemRemoved(position)
-
-            //もしデータの順番に影響がある場合は通知を追加
-            notifyItemRangeChanged(position, dataset.size)
-
-            //必要に応じてトースト表示
-            Toast.makeText(context, "削除しました", Toast.LENGTH_SHORT).show()
+        //削除ボタンを押されたときの処理
+        holder.deletingButton.setOnClickListener {
+            // 現在のViewHolderが指している正しい位置を取得する
+            val pos = holder.adapterPosition
+            if (pos != RecyclerView.NO_POSITION) {
+                //datasetから該当行のデータを削除
+                dataset.removeAt(pos)
+                //RecyclerView「ここの行が削除されたよ」っていうことを教える
+                notifyItemRemoved(pos)
+                //削除によって行番号がずれるのを修正
+                notifyItemRangeChanged(pos, dataset.size)
+            }
         }
 
         /*
