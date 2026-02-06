@@ -73,7 +73,7 @@ class MedAddActivity : OverflowMenu() {
 
             // Requestを作成
             val request = Request.Builder()
-                .url(MyApplication.getInstance().apiUrl + "deleteCtl.php")
+                .url(MyApplication.getInstance().apiUrl + "searchMed.php")
                 .post(requestBody)
                 .build()
             // リクエスト送信（非同期処理）
