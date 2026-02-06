@@ -204,18 +204,68 @@ class UserMedAdapter(private val dataset:MutableList<UserMedRowData>,private val
 
         //削除ボタンを押されたときの処理
         holder.deletingButton.setOnClickListener {
-            // 現在のViewHolderが指している正しい位置を取得する
             val pos = holder.adapterPosition
-            if (pos != RecyclerView.NO_POSITION) {
-                //datasetから該当行のデータを削除
-                dataset.removeAt(pos)
-                //RecyclerView「ここの行が削除されたよ」っていうことを教える
-                notifyItemRemoved(pos)
-                //削除によって行番号がずれるのを修正
-                notifyItemRangeChanged(pos, dataset.size)
-            }
-        }
+            if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
 
+            // HTTP接続用インスタンス生成
+            val client = OkHttpClient()
+            val mediaType = "application/json; charset=utf-8".toMediaType()
+
+            // PHP(deleteCtl.php)に合わせたJSON
+            val requestBodyJson = JSONObject().apply {
+                put("userId", MyApplication.getInstance().loginUserId)
+                put("userMedNo", item.userMedNo)
+            }
+            Log.d("delete_param", requestBodyJson.toString())
+
+            val requestBody = requestBodyJson
+                .toString()
+                .toRequestBody(mediaType)
+
+            val request = Request.Builder()
+                .url(MyApplication.getInstance().apiUrl + "deleteCtl.php")
+                .post(requestBody)
+                .build()
+            client.newCall(request).enqueue(object : Callback {
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyStr = response.body?.string().orEmpty()
+
+                    (context as? android.app.Activity)?.runOnUiThread {
+
+                        // JSONでない場合（PHPエラー対策）
+                        if (!bodyStr.trim().startsWith("{")) {
+                            Toast.makeText(context, "サーバーエラー", Toast.LENGTH_SHORT).show()
+                            Log.d("server_error", bodyStr)
+                            return@runOnUiThread
+                        }
+
+                        val json = JSONObject(bodyStr)
+                        val status = json.optString("result", "error")
+
+                        if (status != "success") {
+                            val errMsg = json.optString("errMsg", "削除に失敗しました")
+                            Toast.makeText(context, errMsg, Toast.LENGTH_SHORT).show()
+                            return@runOnUiThread
+                        }
+
+                        // ===== 成功したときだけ削除 =====
+                        dataset.removeAt(pos)
+                        notifyItemRemoved(pos)
+                        notifyItemRangeChanged(pos, dataset.size)
+
+                        Toast.makeText(context, "削除しました", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    (context as? android.app.Activity)?.runOnUiThread {
+                        Toast.makeText(context, "通信に失敗しました", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            })
+        }
 
 
 

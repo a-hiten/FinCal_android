@@ -8,6 +8,7 @@
         <domain includeSubdomains="true">10.109.2.10</domain>
         <domain includeSubdomains="true">10.109.1.206</domain>
         <domain includeSubdomains="true">10.109.1.238</domain>
+        <domain includeSubdomains="true">10.109.0.2</domain>
 
 
 
