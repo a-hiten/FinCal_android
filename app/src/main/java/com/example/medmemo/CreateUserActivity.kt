@@ -40,7 +40,7 @@ class CreateUserActivity : AppCompatActivity() {
         val userIdEdit = findViewById<EditText>(R.id.userIdEdit)
         val passwordEdit = findViewById<EditText>(R.id.passwordEdit)
         val rePasswordEdit = findViewById<EditText>(R.id.rePasswordEdit)
-        val roleEdit = findViewById<Spinner>(R.id.roleEdit)
+//        val roleEdit = findViewById<Spinner>(R.id.roleEdit)
         val createPageText = findViewById<Button>(R.id.createPageText)
         val loginPageText = findViewById<TextView>(R.id.loginPageText)
 
@@ -96,7 +96,6 @@ class CreateUserActivity : AppCompatActivity() {
                 put("userName", userName)
                 put("userId", userId)
                 put("password", password)
-                put("role",roleEdit)
             }
             // BodyのデータをAPIに送るためにRequestBody形式に加工
             val requestBody = requestBodyJson.toString().toRequestBody(mediaType)
