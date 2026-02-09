@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="MedName"
+        android:textColor="#000000"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/view4"
@@ -68,6 +69,7 @@
         android:ems="10"
         android:hint="remaining"
         android:inputType="text"
+        android:textColor="#000000"
         app:layout_constraintStart_toEndOf="@+id/remainingText"
         app:layout_constraintTop_toBottomOf="@+id/MedName" />
 
@@ -92,6 +94,7 @@
         android:ems="10"
         android:hint="date"
         android:inputType="text"
+        android:textColor="#050000"
         app:layout_constraintStart_toEndOf="@+id/expDateText"
         app:layout_constraintTop_toBottomOf="@+id/remainingEditText" />
 

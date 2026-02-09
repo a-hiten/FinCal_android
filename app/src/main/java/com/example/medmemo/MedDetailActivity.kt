@@ -1,5 +1,6 @@
 package com.example.medmemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -26,6 +27,11 @@ import org.json.JSONObject
 import java.io.IOException
 
 class MedDetailActivity : AppCompatActivity() {
+
+    // ★ ここに追加（クラス変数）
+//    private var remainingCnt: Int = 0
+//    private var expDate: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,6 +41,8 @@ class MedDetailActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
         // 画面デザインで定義したオブジェクトを変数として宣言する。
         val titleText = findViewById<TextView>(R.id.textView)   // ページのタイトルの部
         titleText.text = "薬の編集画面"
@@ -50,6 +58,7 @@ class MedDetailActivity : AppCompatActivity() {
         val contraindication = findViewById<TextView>(R.id.comboConText)
         val returnButton = findViewById<ImageButton>(R.id.returnButton)
         val editButton = findViewById<Button>(R.id.editButton)
+
 
         //戻る矢印押したら前の場面にもどる
         returnButton.setOnClickListener {
@@ -131,6 +140,22 @@ class MedDetailActivity : AppCompatActivity() {
                 }
             }
         })
+        // editボタンを押したら編集画面へ遷移
+        editButton.setOnClickListener {
+            val intent = Intent(this, MedEditActivity::class.java)
+            intent.putExtra("medNo", medNo)
+            intent.putExtra("medName", medNameCon.text.toString())
+
+//            intent.putExtra("medNo", medNo)
+//            intent.putExtra("medName", medNameCon.text.toString())
+
+            // ★ userMedテーブルの値
+//            intent.putExtra("remainingCount", remainingCnt.toString())
+//            intent.putExtra("limitDate", expDate)
+
+            startActivity(intent)
+        }
+
 
     }
 }
